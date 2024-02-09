@@ -18,14 +18,16 @@ import './CreateAccountForm.scss';
 export default function CreateAccountForm() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const formData = useRef({ email: '', password: '' });
+  const formData = useRef({ email: '', password: '', lastname: '', firstname: ''});
 
   const onSubmit = useCallback(async (e) => {
     e.preventDefault();
-    const { email, password } = formData.current;
+    const { email, password, firstname, lastname} = formData.current;
+    
     setLoading(true);
 
-    const result = await createAccount(email, password);
+    const result = await createAccount(email, password, lastname, firstname);
+    console.log(email,password,firstname,lastname);
     setLoading(false);
 
     if (result.isOk) {
@@ -52,6 +54,27 @@ export default function CreateAccountForm() {
           <EmailRule message="Email is invalid" />
           <Label visible={false} />
         </Item>
+
+        
+
+        <Item
+          dataField={'lastname'}
+          editorType={'dxTextBox'}
+          editorOptions={lastnameOptions}
+        >
+          <RequiredRule message="Vezetéknév kötelező" />
+          <Label visible={false} />
+        </Item>
+
+        <Item
+          dataField={'firstname'}
+          editorType={'dxTextBox'}
+          editorOptions={firstnameOptions}
+        >
+          <RequiredRule message="Keresztnév kötelező" />
+          <Label visible={false} />
+        </Item>
+
         <Item
           dataField={'password'}
           editorType={'dxTextBox'}
@@ -105,3 +128,5 @@ export default function CreateAccountForm() {
 const emailEditorOptions = { stylingMode: 'filled', placeholder: 'Email', mode: 'email' };
 const passwordEditorOptions = { stylingMode: 'filled', placeholder: 'Password', mode: 'password' };
 const confirmedPasswordEditorOptions = { stylingMode: 'filled', placeholder: 'Confirm Password', mode: 'password' };
+const lastnameOptions = { stylingMode: 'filled', placeholder: 'Vezetéknév'};
+const firstnameOptions = { stylingMode: 'filled', placeholder: 'Keresztnév'};

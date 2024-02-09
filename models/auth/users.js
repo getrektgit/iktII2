@@ -23,6 +23,12 @@ module.exports = (sequelize, Sequelize, types) => {
                 type: types.STRING,
                 primaryKey: false,
             },
+
+            password:{
+                type: types.STRING,
+                primaryKey: false,
+            },
+
         },
         {
             // beállítások

@@ -1,4 +1,6 @@
 import defaultUser from '../utils/default-user';
+import axios from 'axios'
+
 
 export async function signIn(email, password) {
   try {
@@ -34,10 +36,30 @@ export async function getUser() {
   }
 }
 
-export async function createAccount(email, password) {
+export async function createAccount(email, password,firstname,lastname) {
   try {
     // Send request
-    console.log(email, password);
+    console.log(email, password,firstname,lastname);
+    const config = {
+      headers: {
+        'Content-Type':'application/json'
+      }
+    }
+
+    const body_raw = {
+      email: email,
+      password: password,
+      lastName: lastname,
+      firstName: firstname
+    }
+
+    const body = JSON.stringify(body_raw)
+
+    const res = await axios.post(
+      'http://localhost:3021/users',
+      body,
+      config
+    )
 
     return {
       isOk: true
