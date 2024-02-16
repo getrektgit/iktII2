@@ -5,8 +5,25 @@ import axios from 'axios'
 export async function signIn(email, password) {
   try {
     // Send request
-    console.log(email, password);
+    const config = {
+      headers: {
+        'Content-Type':'application/json'
+      }
+    }
 
+    const body_raw = {
+      email: email,
+      password: password,
+    }
+
+    const body = JSON.stringify(body_raw)
+
+    const res = await axios.post(
+      'http://localhost:3021/users',
+      body,
+      config
+    )
+    
     return {
       isOk: true,
       data: defaultUser

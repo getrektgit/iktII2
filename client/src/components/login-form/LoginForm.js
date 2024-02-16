@@ -73,7 +73,7 @@ export default function LoginForm() {
               {
                 loading
                   ? <LoadIndicator width={'24px'} height={'24px'} visible={true} />
-                  : 'Sign In'
+                  : 'Belépés'
               }
             </span>
           </ButtonOptions>
@@ -97,4 +97,4 @@ export default function LoginForm() {
 
 const emailEditorOptions = { stylingMode: 'filled', placeholder: 'Email', mode: 'email' };
 const passwordEditorOptions = { stylingMode: 'filled', placeholder: 'Password', mode: 'password' };
-const rememberMeEditorOptions = { text: 'Remember me', elementAttr: { class: 'form-text' } };
+const rememberMeEditorOptions = { text: 'Jegyezz meg', elementAttr: { class: 'form-text' } };

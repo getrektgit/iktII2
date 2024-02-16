@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const db = require("../models/index.js");
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const { where } = require('sequelize');
 
 /* GET users listing. */
 router.get('/',  async function(req, res, next) {
@@ -37,6 +38,32 @@ router.post('/', function(req, res, next) {
     CreateUser(req,res)
   })
   
+  router.post('/login',async function(req, res, next) {
+    console.log(req.body)
+    const {email,password} = req.body;
+    const u = await db.Auth.User.findAll({
+      where:{
+        email: email
+      }
+    })
+    console.log(u)
+    if(u.lenght == 0){
+      return res.status(400).json({message: "Nincs ilyen felhasználó"})
+    }
+    let isMatch = await bcrypt.compare(password,u[0].password)
+    if(!isMatch){
+      return res.status(400).json({message: "Rossz jelszó"})
+    }
+    const payload = {
+      user:{
+        id: u[0].id,
+        email: u[0].email,
+        firstname: u[0].firstname,
+        lastname: u[0].lastname,
+      }
+    }
+
+  })
 
 
 router.delete('/', function(req, res, next) {
